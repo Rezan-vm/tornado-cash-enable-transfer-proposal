@@ -1,4 +1,4 @@
-## Setup
+## Tornado cash Proposal #1: Enable TORN Transfers
 
 ```
 npm install --dev
