@@ -26,6 +26,10 @@ const config: HardhatUserConfig = {
         blockNumber: 11720000,
       },
     },
+    mainnet: {
+      url: process.env.ETH_RPC_MAINNET,
+      accounts: [process.env.PRIV_KEY],
+    },
   },
 };
 

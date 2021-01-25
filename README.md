@@ -4,12 +4,20 @@
 npm install --dev
 ```
 
-Configure the following env vars:
+You need to configure:
+
 ```
 ETH_RPC_MAINNET=<Ethereum node>
 ```
 
-Run the test
+Run the test:
+
 ```
 npx hardhat test
+```
+
+Deploy:
+
+```
+GAS_PRICE=80 PRIV_KEY=<Private key> npx hardhat run --network mainnet scripts/deploy.ts
 ```

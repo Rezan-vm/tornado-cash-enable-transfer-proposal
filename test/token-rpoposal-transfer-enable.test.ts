@@ -2,7 +2,7 @@
 
 import "@nomiclabs/hardhat-waffle";
 import { expect } from "chai";
-import hre, { ethers, waffle } from "hardhat";
+import { ethers } from "hardhat";
 import GovernanceAbi from "../contracts/external/governance";
 import TornAbi from "../contracts/external/torn";
 import { advanceTime, getSignerFromAddress } from "./utils";
@@ -17,6 +17,8 @@ describe("Enable transfer proposal", () => {
   const torn25k = ethers.utils.parseEther("25000");
 
   it("Should execute proposal and allow transfers", async () => {
+    // This test is forking the mainnet state
+
     // Proposal contract
     const Proposal = await ethers.getContractFactory(
       "TokenProposalTransfersEnable"
@@ -45,7 +47,7 @@ describe("Enable transfer proposal", () => {
         .transfer(dummyAddress, "1")
     ).to.be.revertedWith("TORN: paused");
 
-    // Impersonate a TORN whale and a small holder.
+    // Impersonate a TORN whale
     // We use one of the team vesting contract with 800k+ TORN that
     // we will use like if it was an EOA.
     const tornWhaleSigner = await getSignerFromAddress(tornWhale);
@@ -66,7 +68,6 @@ describe("Enable transfer proposal", () => {
 
     // Wait the voting delay and vote for the proposal
     await advanceTime((await governance.VOTING_DELAY()).toNumber() + 1);
-
     await governance.castVote(1, true, { gasPrice: 0 });
 
     // Wait voting period + execution delay
